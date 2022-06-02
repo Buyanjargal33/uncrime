@@ -26,6 +26,13 @@ import {
     const backgroundStyle = {
       backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
+  
+  const getImeiNumber = () =>{
+    const IMEI = require('react-native-imei');
+    IMEI.getImei().then(imeiList => {
+      console.log(imeiList);
+    })
+  }
 
   const requestImeiPermission = async () =>{
     try {
@@ -41,12 +48,8 @@ import {
       );
       if(granted === PermissionsAndroid.RESULTS.GRANTED){
         try {
-          const getImeiNumber = () =>{
-            const IMEI = require('react-native-imei');
-            IMEI.getImei().then(imeiList => {
-              console.log(imeiList);
-            })
-          }
+          console.log('working');
+          getImeiNumber();
         } catch (error) {
           console.log(error);
         }
@@ -61,7 +64,7 @@ import {
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <TouchableOpacity onPress={requestImeiPermission}><Text>Click here</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={requestImeiPermission}><Text>Click here</Text></TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -70,6 +73,16 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
+  button: {
+    height: 100,
+    width: 200,
+    backgroundColor: 'orange',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 300,
+    marginLeft: 100
+  }
 });
 
 export default App;
